@@ -30,6 +30,11 @@ const itemSchema = new mongoose.Schema({
         ref : 'Loan',
         default : null
     },
+    lateFeePerDay : {
+        type: Number,
+        required: true,
+        min: 0
+    },
 },
 {
     timestamps: true
