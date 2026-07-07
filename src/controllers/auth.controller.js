@@ -1,5 +1,12 @@
 import { Staff } from '../models/Staff.model.js';
 
+function generateAccessAndRefreshTokens(staff){
+  const accessToken = staff.generateAccessToken()
+  const refreshToken = staff.generateRefreshToken();
+
+  return {accessToken,refreshToken};
+}
+
 async function registerStaff(req, res) {
     console.log(`Register route hit`)
   try {
@@ -26,4 +33,37 @@ async function registerStaff(req, res) {
   }
 }
 
-export { registerStaff };
+
+async function loginStaff(req,res) {
+  const {username,password} = req.body;
+
+  if(!username || !password){
+    return res.status(400).json({message: 'Provide all the fields'});
+  }
+  const staff = await Staff.findOne({username});
+
+  if(!staff){
+    return res.status(401).json({message: 'User does not exists'});
+
+  }
+
+  const isPasswordValid = await staff.comparePassword(password);
+  if(!isPasswordValid){
+    return res.status(401).json({message: 'Invalid credentials'});
+  }
+
+  const {accessToken,refreshToken} = generateAccessAndRefreshTokens(staff);
+
+  staff.refreshToken = refreshToken;
+  await staff.save();
+  const cookieOptions = {
+    httpOnly: true,
+    secure: false
+  }
+
+  return res.status(200).cookie('refreshToken',refreshToken,cookieOptions).json({accessToken,
+    message: "User logged in successfully"
+  })
+
+}
+export { registerStaff ,loginStaff};
