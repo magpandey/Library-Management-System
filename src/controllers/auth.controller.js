@@ -61,7 +61,7 @@ async function loginStaff(req,res) {
     secure: false
   }
 
-  return res.status(200).cookie('refreshToken',refreshToken,cookieOptions).json({accessToken,
+  return res.status(200).cookie('accessToken',accessToken,cookieOptions).json({accessToken,
     message: "User logged in successfully"
   })
 
