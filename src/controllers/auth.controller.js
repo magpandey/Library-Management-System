@@ -76,6 +76,7 @@ async function logoutStaff(req,res){
     },
     {new: true}
   )
+  console.log(updatedStaff)
 
       const cookieOptions = {
     httpOnly: true,
