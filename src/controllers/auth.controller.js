@@ -69,14 +69,12 @@ async function loginStaff(req,res) {
 
 async function logoutStaff(req,res){
     const staff = req.staff;
-    console.log(staff);
     const updatedStaff = await Staff.findByIdAndUpdate(staff._id,
       {
         $set: {refreshToken: null}
     },
     {new: true}
   )
-  console.log(updatedStaff)
 
       const cookieOptions = {
     httpOnly: true,

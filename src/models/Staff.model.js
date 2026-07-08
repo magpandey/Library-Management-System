@@ -36,7 +36,7 @@ staffSchema.methods.comparePassword = async function(password){
 staffSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
-        id: this._id,
+        _id: this._id,
         username: this.username,
         role: this.role
     },
@@ -48,7 +48,7 @@ staffSchema.methods.generateAccessToken = function(){
 staffSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
-            id: this._id
+            _id: this._id
         },
         process.env.JWT_REFRESH_SECRET,
         {expiresIn: process.env.JWT_REFRESH_EXPIRES_IN}
