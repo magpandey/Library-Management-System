@@ -66,4 +66,24 @@ async function loginStaff(req,res) {
   })
 
 }
-export { registerStaff ,loginStaff};
+
+async function logoutStaff(req,res){
+    const staff = req.staff;
+    console.log(staff);
+    const updatedStaff = await Staff.findByIdAndUpdate(staff._id,
+      {
+        $set: {refreshToken: null}
+    },
+    {new: true}
+  )
+
+      const cookieOptions = {
+    httpOnly: true,
+    secure: false
+  }
+    res.clearCookie('accessToken',cookieOptions);
+
+
+    return res.status(200).json({message: "staff logged out successfully"});
+}
+export { registerStaff ,loginStaff,logoutStaff};
