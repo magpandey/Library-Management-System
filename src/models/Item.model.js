@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+import { VALID_ITEM_TYPES } from '../config/feeRules.js';
 const itemSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -8,7 +8,7 @@ const itemSchema = new mongoose.Schema({
     },
     type:{
         type: String,
-        enum : ['book','cd','dvd'],
+        enum : VALID_ITEM_TYPES,
         required : [true,'Type of the item is required']
     },
     creator: {
@@ -42,4 +42,4 @@ const itemSchema = new mongoose.Schema({
 
 itemSchema.index({type: 1,isCheckedOut: 1});
 
-export const Item = mogoose.model('Item',itemSchema)
+export const Item = mongoose.model('Item',itemSchema)

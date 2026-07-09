@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
-
+import itemRoutes from './routes/item.routes.js'
 dotenv.config({
     path: "./.env"
 });
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.send('Library Management System API is running');
 });
 app.use('/api/auth',authRoutes);
-
+app.use('/api/items',itemRoutes)
 
 
 export default app;
