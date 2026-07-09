@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import itemRoutes from './routes/item.routes.js'
+import customerRoutes from './routes/customer.routes.js'
 dotenv.config({
     path: "./.env"
 });
@@ -18,6 +19,6 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth',authRoutes);
 app.use('/api/items',itemRoutes)
-
+app.use('/api/customers',customerRoutes)
 
 export default app;
