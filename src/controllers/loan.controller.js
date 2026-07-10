@@ -112,4 +112,51 @@ async function returnItem(req, res) {
       .json({ message: `Can'nt provide return feature for now` });
   }
 }
-export { checkoutItem, returnItem };
+
+
+async function getLoans(req,res){
+    try {
+        const {itemId,customerId,active,page,limit} = req.query;
+
+        const filter = {}
+        if(customerId){
+            filter.customerId = customerId
+        }
+        if(itemId){
+            filter.itemId = itemId
+        }
+
+        if(active !== undefined){
+            if(active === 'true'){
+            filter.returnDate = null;
+            }
+        else{
+            filter.returnDate = {$ne: null}
+            }
+        }
+
+        const pageNum = parseInt(page) || 1;
+        const limitNum = parseInt(limit) || 20;
+        const skip = (pageNum - 1) * limitNum;
+
+        const loans = await Loan.find(filter).populate('itemId').populate('customerId').skip(skip).limit(limitNum)
+
+        const total = await Loan.countDocuments(filter);
+
+        return res.status(200).json(
+            {
+                loans,
+                total,
+                page: pageNum,
+                totalPages: Math.ceil(total/limitNum)
+            }
+        )
+
+
+    } catch (error) {
+        return res.status(500).json({message:`Unable to fetch loans record`})
+    }
+}
+
+
+export { checkoutItem, returnItem,getLoans};

@@ -1,4 +1,4 @@
-import  {checkoutItem,returnItem } from "../controllers/loan.controller.js";
+import  {checkoutItem,getLoans,returnItem ,getLoans} from "../controllers/loan.controller.js";
 
 import isStaffAuthenticated from "../middlewares/auth.middleware.js";
 
@@ -10,5 +10,5 @@ router.route('/checkout').post(isStaffAuthenticated,checkoutItem)
 
 router.route('/return').post(isStaffAuthenticated,returnItem)
 
-
+router.route('/').get(isStaffAuthenticated,getLoans)
 export default router
