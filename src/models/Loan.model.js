@@ -19,14 +19,15 @@ const loanSchema = new mongoose.Schema({
     },
     dueDate : {
         type: Date,
+        required: true,
         default : null,
+
     },
     returnDate : {
         type : Date,
-        default :0,
-        min : 0,
+        default :null,
     },
-    LateFeeCharged : {
+    lateFeeCharged : {
         type : Number,
         default : 0,
         min : 0,

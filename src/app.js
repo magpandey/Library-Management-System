@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import itemRoutes from './routes/item.routes.js'
 import customerRoutes from './routes/customer.routes.js'
+import loanRoutes from './routes/loan.routes.js'
 dotenv.config({
     path: "./.env"
 });
@@ -20,5 +21,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth',authRoutes);
 app.use('/api/items',itemRoutes)
 app.use('/api/customers',customerRoutes)
+app.use('/api/loan',loanRoutes)
 
 export default app;
